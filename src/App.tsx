@@ -1,23 +1,29 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Roster from './Roster';
+import MoneyForm from './MoneyForm';
+import { TeamStoreProvider } from './TeamStore';
+import Athlete from './Athlete';
+import TeamInfo from './TeamInfo';
+
+const lebronJames = new Athlete("Lebron James", 37, 5)
+const stephCurry = new Athlete("Steph Curry", 34, 4)
+
+function getPlayersFromBackend(): Athlete[] {
+  return [lebronJames, stephCurry]
+}
 
 function App() {
+  const players = getPlayersFromBackend();
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <TeamStoreProvider players={players}>
+          <TeamInfo />
+          <Roster />
+          <MoneyForm />
+        </TeamStoreProvider>
       </header>
     </div>
   );
